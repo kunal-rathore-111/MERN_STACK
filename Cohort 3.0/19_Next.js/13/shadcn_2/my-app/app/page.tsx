@@ -1,6 +1,6 @@
 
 
-import { DrawerComp } from "@/components/DrawerComp"
+import { DrawerDialog } from "@/components/DrawerComp"
 
 
 
@@ -8,7 +8,8 @@ export default function HomePage() {
 
   return <div>
     HIII
-
-    <DrawerComp></DrawerComp>
+    <div className=" border-2 border-red-500 w-40">
+      <DrawerDialog></DrawerDialog>
+    </div>
   </div>
 }
