@@ -1,0 +1,24 @@
+services:
+  postgresDB:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: myUser
+      POSTGRES_PASSWORD: mySecretPass123
+      POSTGRES_DB: docker22DB
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresData:/var/lib/postgresql
+  docker22:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3000
+      - DB_URL=postgresql://myUser:mySecretPass123@postgresDB:5432/docker22DB
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgresDB
+volumes:
+  postgresData:
