@@ -1,0 +1,21 @@
+{
+  "name": "docker3",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --watch ./src/index.ts",
+    "build": "tsc",
+    "start": "tsc && bun ./dist/index.js"
+  },
+  "devDependencies": {
+    "@repo/database": "*",
+    "@types/bun": "latest",
+    "@types/express": "^5.0.6",
+    "express": "^5.2.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {}
+}

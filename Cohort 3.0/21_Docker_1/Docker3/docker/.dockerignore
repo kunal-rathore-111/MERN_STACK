@@ -1,0 +1,11 @@
+
+node_modules
+./apps/server/node_modules
+./apps/wss/node_modules
+./apps/app/node_modules
+./packages/database/node_modules
+.env
+./apps/server/.env
+./apps/app/.env
+./apps/wss/.env
+./packages/database/.env

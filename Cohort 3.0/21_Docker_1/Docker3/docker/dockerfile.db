@@ -1,0 +1,20 @@
+
+
+FROM oven/bun:alpine
+
+WORKDIR /app
+
+ARG DB_URL
+
+COPY ./package.json ./package.json
+COPY ./bun.lock ./bun.lock
+COPY ./turbo.json ./turbo.json
+COPY ./packages/database/package.json ./packages/database/package.json
+
+RUN bun install
+
+COPY ./packages/database ./packages/database
+
+ENV DB_URL=${DB_URL}
+
+CMD [ "bun","run","docker:database" ]

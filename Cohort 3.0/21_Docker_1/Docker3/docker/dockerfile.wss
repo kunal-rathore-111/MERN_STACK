@@ -1,0 +1,19 @@
+
+FROM oven/bun:alpine
+
+WORKDIR /app/wss
+
+COPY ./package.json ./package.json
+COPY ./packages ./packages
+COPY ./bun.lock ./bun.lock
+COPY ./turbo.json ./turbo.json
+
+COPY ./apps/wss/package.json ./wss/package.json
+
+RUN bun install
+
+COPY ./apps/wss ./wss
+
+EXPOSE 8080
+
+CMD [ "bun","run","docker:wss" ]
