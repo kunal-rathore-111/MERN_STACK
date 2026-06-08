@@ -1,0 +1,68 @@
+services:
+  postgresDB:
+    image: postgres:alpine
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U myUser -d docker3DB']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: myUser
+      POSTGRES_PASSWORD: mySecretPass123
+      POSTGRES_DB: docker3DB
+    volumes:
+      - postgresDB_Volume:/var/libs/postgresql
+
+  database-image:
+    build:
+      context: ./
+      dockerfile: ./docker/dockerfile.db
+      args:
+        - DB_URL=postgresql://myUser:mySecretPass123@postgresDB:5432/docker3DB
+    depends_on:
+      postgresDB:
+        condition: service_healthy
+  server-image:
+    build:
+      context: ./
+      dockerfile: ./docker/dockerfile.server
+    environment:
+      - DB_URL=postgres://myUser:mySecretPass123@postgresDB:5432/docker3DB
+    ports:
+      - 3001:3001
+    depends_on:
+      postgresDB:
+        condition: service_healthy
+      database-image:
+        condition: service_started
+  wss-image:
+    build:
+      context: ./
+      dockerfile: ./docker/dockerfile.wss
+    environment:
+      - DB_URL=postgres://myUser:mySecretPass123@postgresDB:5432/docker3DB
+    ports:
+      - 8080:8080
+    depends_on:
+      postgresDB:
+        condition: service_healthy
+      database-image:
+        condition: service_started
+
+  nextjs-image:
+    build:
+      context: ./
+      dockerfile: ./docker/dockerfile.nextJS
+    environment:
+      - DB_URL=postgres://myUser:mySecretPass123@postgresDB:5432/docker3DB
+    ports:
+      - 3000:3000
+    depends_on:
+      postgresDB:
+        condition: service_healthy
+      database-image:
+        condition: service_started
+volumes:
+  postgresDB_Volume:

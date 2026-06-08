@@ -20,7 +20,8 @@ wss.on('connection', (ws: WebSocket) => {
 
   ws.on('message', async (data: Buffer) => {
     const message = data.toString(); // convert to string then json
-    const d = JSON.parse(message);
+    let d = null;
+    if (message) d = JSON.parse(message);
     console.log('Message Recieved: ', message);
     if (!d || !d.name) return ws.send('Name not found in request');
     try {

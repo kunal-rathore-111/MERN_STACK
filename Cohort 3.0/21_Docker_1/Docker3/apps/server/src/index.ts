@@ -3,6 +3,13 @@ import { db, UsersTable } from '@repo/database';
 const app = express();
 app.use(express.json());
 
+try {
+  await db.execute('select 1');
+  console.log('database connected');
+} catch (error) {
+  console.error('database not connected (error from server)');
+}
+
 app.get('/', async (req, res) => {
   console.log('On get route');
   try {

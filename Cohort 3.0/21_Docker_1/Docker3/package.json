@@ -2,9 +2,9 @@
   "name": "Docker3",
   "private": true,
   "scripts": {
-    "docker:wss": "cd apps/wss && bun run start",
-    "docker:server": "cd apps/server && bun run start",
-    "docker:web": "cd apps/app && bun run start",
+    "docker:wss": "cd apps/wss && bun run build && bun run start",
+    "docker:server": "cd apps/server && bun run build && bun run start",
+    "docker:nextJS": "cd apps/app && bun run build && bun run start",
     "docker:database": "cd packages/database && bun run build",
     "build": "turbo run build",
     "dev": "turbo run dev",

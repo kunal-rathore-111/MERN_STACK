@@ -1,18 +1,18 @@
 
 FROM oven/bun:alpine
 
-WORKDIR /app/wss
+WORKDIR /app
 
 COPY ./package.json ./package.json
 COPY ./packages ./packages
 COPY ./bun.lock ./bun.lock
 COPY ./turbo.json ./turbo.json
 
-COPY ./apps/wss/package.json ./wss/package.json
+COPY ./apps/wss/package.json ./apps/wss/package.json
 
 RUN bun install
 
-COPY ./apps/wss ./wss
+COPY ./apps/wss ./apps/wss
 
 EXPOSE 8080
 
